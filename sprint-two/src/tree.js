@@ -24,8 +24,10 @@ treeMethods.contains = function(target, branch){
       return true;
     } 
     for(var i = 0; i < branch.children.length; i++){
-      debugger;
-      return branch.children[i].contains(target, branch.children[i]);
+      var hold = branch.children[i].contains(target, branch.children[i]); 
+      if(hold) {
+        return true;
+      }
     }
     
 
