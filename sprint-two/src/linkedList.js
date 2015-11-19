@@ -15,12 +15,19 @@ var LinkedList = function(){
   };
 
   list.removeHead = function(){
-    return list.head;
+    var hold = list.head.value;
+    list.head = list.head.next;
+    return hold;
   };
 
-  list.contains = function(target){
-  };
-
+  list.contains = function(target){  
+    for(var node = list.head ; node !== null; node = node.next){
+      if(node.value === target){
+        return true;
+      }
+    }
+    return false;  
+  }
   return list;
 };
 
