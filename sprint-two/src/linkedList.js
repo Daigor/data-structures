@@ -4,9 +4,18 @@ var LinkedList = function(){
   list.tail = null;
 
   list.addToTail = function(value){
+    var node = Node(value);
+    if(list.head === null){
+      list.head = node;
+      list.tail = node;
+    } else {
+      list.tail.next = node;
+      list.tail = node;
+    }
   };
 
   list.removeHead = function(){
+    return list.head;
   };
 
   list.contains = function(target){
@@ -27,3 +36,5 @@ var Node = function(value){
 /*
  * Complexity: What is the time complexity of the above functions?
  */
+
+
