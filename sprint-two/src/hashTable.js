@@ -22,9 +22,9 @@ HashTable.prototype.insert = function(k, v){
 HashTable.prototype.retrieve = function(k){
   var i = getIndexBelowMaxForKey(k, this._limit);
   var index = this._storage.get(i);
-  for(var i = 0; i < index.length; i++){
-    if(index[i][0] === k){
-      return index[i][1];
+  for(var j = 0; j < index.length; j++){
+    if(index[j][0] === k){
+      return index[j][1];
     }
   }
 };
