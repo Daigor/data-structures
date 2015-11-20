@@ -5,8 +5,18 @@ var HashTable = function(){
 
 HashTable.prototype.insert = function(k, v){
   var i = getIndexBelowMaxForKey(k, this._limit);
-  this._storage.set(i, k);
-  this._storage.set(i[])
+  var index = this._storage.get(i) || [];
+  var overwrite = false;
+  _.each(index, function(pair){
+    if(pair[0] === k){
+      pair[1] = v;
+      overwrite = true;
+    }
+  });
+  if(!overwrite){
+    index.push([k,v]);
+  }
+  this._storage.set(i, index);
 };
 
 HashTable.prototype.retrieve = function(k){
