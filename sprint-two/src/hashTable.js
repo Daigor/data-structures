@@ -1,9 +1,15 @@
 var HashTable = function(){
   this._limit = 8;
   this._storage = LimitedArray(this._limit);
+  this.count = 0;
 };
 
 HashTable.prototype.insert = function(k, v){
+  this.count++;
+  if(this.count / this._limit >= .75){
+    this._limit *= 2; 
+    this.resize();
+  } 
   var i = getIndexBelowMaxForKey(k, this._limit);
   var index = this._storage.get(i) || [];
   var overwrite = false;
@@ -16,6 +22,7 @@ HashTable.prototype.insert = function(k, v){
   if(!overwrite){
     index.push([k,v]);
   }
+
   this._storage.set(i, index);
 };
 
@@ -34,7 +41,21 @@ HashTable.prototype.remove = function(k){
 };
 
 
+HashTable.prototype.resize = function(){
+  var newStorage = LimitedArray(this._limit);
+  this._storage.each(function(array, key){
+    if(array){
+      for(var i = 0; i < array.length; i++){
+        var tuple = array[i];
+        var newIndex = getIndexBelowMaxForKey(tuple[0], this._limit);
+        newStorage.set(newIndex, tuple[1]);
+      }
+    }
+  });
+  this._storage = newStorage;
+}
 
 /*
  * Complexity: What is the time complexity of the above functions?
  */
+

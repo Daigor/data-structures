@@ -47,7 +47,7 @@ BinarySearchTree.prototype.contains = function(number){
 };
 
 BinarySearchTree.prototype.depthFirstLog = function(callback){
-  callback(this.value)
+  callback(this.value);
   if(this.left){
     this.left.depthFirstLog(callback);
   }
@@ -57,4 +57,11 @@ BinarySearchTree.prototype.depthFirstLog = function(callback){
 };
 /*
  * Complexity: What is the time complexity of the above functions?
- */
+ * depthFirstLog: O(n) where n is number of nodes. The callback is called once for each node in the tree.
+ * insert: O(log n)
+ * contains: O(log n)
+ * Insert and Contains are called recursively. At each recursive step, the set of nodes yet unanalyzed is halved.
+ * BinarySearchTree: O(1). Duh.
+ * OK, I need to get back to work. :) Have fun.
+  */
+
