@@ -28,7 +28,9 @@ HashTable.prototype.insert = function(k, v){
 
 HashTable.prototype.retrieve = function(k){
   var i = getIndexBelowMaxForKey(k, this._limit);
+ 
   var index = this._storage.get(i);
+  console.log(index, 'im in retrieve / index')
   for(var j = 0; j < index.length; j++){
     if(index[j][0] === k){
       return index[j][1];
@@ -37,18 +39,37 @@ HashTable.prototype.retrieve = function(k){
 };
 
 HashTable.prototype.remove = function(k){
-  this.insert(k, null);
+  var i = getIndexBelowMaxForKey(k, this._limit);
+  var index = this._storage.get(i);
+  for(var j = 0; j < index.length; j++){
+    if(index[j][0] === k){
+      index[j][1] = null;
+      console.log(index, 'inside for loop of remove');
+    }
+  }
+  console.log(this._limit, 'remove function');
+  if(this.count / this._limit <= .25){
+    //debugger;
+    this._limit = this._limit / 2;
+    this.resize();
+  }
+  this.count--;
 };
 
 
 HashTable.prototype.resize = function(){
+  var saveLimit = this._limit;
   var newStorage = LimitedArray(this._limit);
   this._storage.each(function(array, key){
     if(array){
+      console.log(array, 'im array in resize')
       for(var i = 0; i < array.length; i++){
         var tuple = array[i];
-        var newIndex = getIndexBelowMaxForKey(tuple[0], this._limit);
-        newStorage.set(newIndex, tuple[1]);
+        console.log(tuple, 'im tuple');
+        var newIndex = getIndexBelowMaxForKey(tuple[0], saveLimit);
+        var place = newStorage.get(newIndex) || [];
+        place.push([tuple[0], tuple[1]]);
+        newStorage.set(newIndex, place);
       }
     }
   });
