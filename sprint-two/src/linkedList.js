@@ -48,6 +48,7 @@ var LinkedList = function(){
     list.tail = list.tail.previous;
     return hold;
   };
+  
   return list;
 
 };
